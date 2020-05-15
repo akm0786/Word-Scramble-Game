@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Word Scramble Game</title>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@1,800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet"> 
+	<style>
+		
+		*{
+
+			padding: 0;
+			margin: 0;
+			font-family: 'Nunito Sans', sans-serif;
+			box-sizing: border-box;
+		}
+
+		header{
+			width: 100%;
+			height: 15vh;
+			background: green;
+		}
+		
+		h1{
+			text-align: center;
+			line-height: 15vh;
+			font-size: 2.1rem;
+			color: #FFFFFF;
+			letter-spacing: 7px;
+			text-transform: uppercase;
+			text-shadow: #474747 3px 5px 2px;
+		}
+
+		section{
+			height: 80vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #16a085;
+		}
+
+		.footer{
+			width: 100%;
+			height: 5vh;
+			text-align:center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+			background: #fa983a;
+
+		}
+
+		.gameArea{
+			width: 50%;
+			background: #f6b93b;
+			height: 400px;
+			padding-top:20px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			border-radius: 9px;
+			box-shadow: 0 8px 6px -2px  black;
+		}
+
+		h3{
+			text-align:center;
+			font-size: 1.9rem;
+		}
+		input{
+
+			padding: 3px;
+			width: 40%;
+			text-align: center;
+			outline: none;
+			border-radius: 8px;
+			border:none;
+			color:green;
+			font-size: 1.1rem;
+			font-weight: 900;
+			margin: 5px 0;
+
+		}
+		 .button{
+			 background-color: tomato;
+			  border: none;
+			  color: black;
+			  cursor:pointer ;
+			  padding: 12px 24px;
+			  text-decoration: none;
+			  margin: 4px 2px;
+			  cursor: pointer;
+			   font-family: 'Roboto', sans-serif;
+			  font-size: 1rem;
+			  transition-property: all;
+			  transition-duration: 0.5s;
+			  transition-timing-function:
+			  cubic-bezier(0.25,0.1,0.25,1);
+			  text-transform: uppercase;
+		}
+		.button:hover{
+			letter-spacing:0.125rem;
+			word-spacing: .2rem;
+		}
+		.hidden{
+			display: none;
+		}
+	
+	</style>
+</head>	
+<body>
+		
+		<header>
+			<h1>word scramble game</h1>
+		</header>	
+
+		<section>
+			<div class="gameArea">
+				<h3 class="message"></h3>
+				<input type="text" class="hidden">
+				<button class="button">click here to start</button>
+			</div>
+		</section>
+		<footer class="footer">
+			<p>Dev by <b><a href="https://github.com/akm0786/" target="_blank">Abhishek Mishra</a></b></p>
+		</footer>
+
+	
+	<script>
+		
+
+			const message=document.querySelector(".message");
+			const input=document.querySelector('input');
+			const button=document.querySelector(".button");
+			let play=false;
+			let splitWord="";
+			let ranValue="";
+			let a="";
+
+
+
+
+			var arr=['python','javascript','angular','rubi','flutter','golang','dart','java','vanilla','android','kotlin','swift','php','html','css'];
+
+
+			
+			const  ranword=()=>
+			{
+
+		let arryRandom=(Math.random()* arr.length);
+		let intOnly=Math.floor(arryRandom);
+		let newWord=arr[intOnly];
+			return newWord;
+		}
+
+			const ranConvert=(splitWord)=>
+		{
+
+		for( let i=splitWord.length-1;i>=0;i--)
+		{
+
+				let temp=splitWord[i];
+				let newIndex=Math.floor(Math.random()*(i+1));
+				splitWord[i]=splitWord[newIndex];
+				splitWord[newIndex]=temp;
+
+		}
+		return splitWord;
+		}
+
+				button.addEventListener('click',function()
+			{
+					
+				if(!play)
+				{
+
+					play=true;
+					button.innerHTML="Guess";
+					input.classList.toggle("hidden");
+
+						 ranValue=ranword();
+						
+					 splitWord=ranConvert(ranValue.split(""));
+					  a=splitWord.join("");
+
+
+					message.innerHTML="Guess the Word : "+a;
+
+					
+
+				}
+				else
+					{
+					if(input.value===ranValue){
+
+					play=false;
+							
+					// console.log("your answer is correct!")
+					message.innerHTML="Correct Answer. It's "+ranValue;
+					button.innerHTML="Start again";
+						// console.log(ranValue);
+					input.value="";
+					input.classList.toggle("hidden");
+
+
+					// console.log(ranValue);	
+					}
+
+
+					else{
+						console.log("incorrect");
+						message.innerHTML="Incorrect Answer. Try again "+a;
+						input.value="";
+
+						}
+
+					 }
+			}
+			);
+
+
+
+		
+	</script>
+	
+
+</body>
+</html>
